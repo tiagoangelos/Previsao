@@ -1,4 +1,6 @@
 # PREVISAO-DO-TEMPO---API
 
+Acesse Em: https://previsao.netlify.app/
+
 WEB SITE QUE RETORNA A PREVISÃO DO TEMPO DE QUALQUER CIDADE DO MUNDO, ATRAVES DE (API_REST)
-API DE PREVISÃO DE TEMPO: https://api.openweathermap.org
+API DE PREVISÃO DE TEMPO USADA: https://api.openweathermap.org
