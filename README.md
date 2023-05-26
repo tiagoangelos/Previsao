@@ -1,6 +1,6 @@
 # PREVISAO-DO-TEMPO---API
 
-Acesse Em: https://previsao.netlify.app/
+Acesse Em: https://tempo-previsao.vercel.app
 
 WEB SITE QUE RETORNA A PREVISÃO DO TEMPO DE QUALQUER CIDADE DO MUNDO, ATRAVES DE (API_REST)
 
