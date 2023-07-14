@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Arvo&display=swap');
+
+body {
+  margin: 0;
+  font-family: 'Arvo', serif;
+}
+
+/*color's */
+:root {
+  --color-icon-seach: #3452d3;
+  --color-primary: #fffefe;
+  --color-background-span: #d0d0d0;
+  --color-secundary: #e13a3a;
+}
+
+
