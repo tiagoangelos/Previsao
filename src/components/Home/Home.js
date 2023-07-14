@@ -141,8 +141,9 @@ function Home(){
 
     //insert results in the page
     const insertInThePage = (weather) => {
-        //Loading-progress
-        progressBar.style.width = '50%';
+        //Loading Progress
+        progressBar.style.width = '75%';
+        progressBar.innerText = '75%';
 
         city.innerText = `${weather.name}, ${weather.sys.country}`;
 
@@ -152,9 +153,6 @@ function Home(){
         let iconName = weather.weather[0].icon;
         let icon = processIcon(iconName);
         container_img.innerHTML = `<img src="${icon}" width="110px" heigh="80px"></img>`;
-
-        //Loading-progress
-        progressBar.style.width = '75%';
 
         let temperature = `${Math.round(weather.main.temp)}°C`;
         container_temp.innerHTML = temperature;
@@ -168,7 +166,8 @@ function Home(){
         
         //Loading-progress - finish
         progressBar.style.width = '100%';
-        setTimeout(loadingFinish, 2000);
+        progressBar.innerText = '100%';
+        setTimeout(loadingFinish, 1500);
     }
 
     //Msg span -> Error City Not Found
@@ -178,7 +177,8 @@ function Home(){
         
         //Loading-progress - finish
         progressBar.style.width = '100%';
-        setTimeout(loadingFinish, 2000);
+        progressBar.innerText = '100%';
+        setTimeout(loadingFinish, 1500);
     }
 
     //Ocult Msg Span -> Sucess
@@ -188,8 +188,9 @@ function Home(){
 
     //Request api
     const requestApi = async (value) => {
-        //loading
-        loading();
+        //progress loading
+        progressBar.style.width = '50%';
+        progressBar.innerText = '50%';
 
         await axios.get(`${Base}weather?q=${value}&lang=${Lang}&units=${Units}&APPID=${Key}`)
         .then(function(response){
@@ -204,6 +205,11 @@ function Home(){
 
     //Treat Value Input
     const treatValue = (search) => {
+        //Loading-progress
+        loading();
+        progressBar.style.width = '25%';
+        progressBar.innerText = '25%';
+
         const srt = search.toLowerCase();
         const value = srt.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
         
