@@ -13,6 +13,24 @@ body {
     width: 25rem;
 }
 
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.icon-header {
+    padding-bottom: 5px;
+    align-items: center;
+    width: 30px;
+    height: 30px;
+}
+
+.icon-header:hover {
+    cursor: pointer;
+    color: var(--color-icon-seach);
+}
+
 .title-header {
     font-size: larger;
     font-weight: bolder;
@@ -87,7 +105,6 @@ body {
 }
 
 /*Loading Progress */
-
 .progress {
     display: none;
     margin: 2rem;
@@ -99,6 +116,11 @@ body {
     width: 25%;
 }
 
+.icon-search, .icon-search-2 {
+    color: var(--color-icon-seach);
+    font-weight: bolder;
+    font-size: large;
+}
 
 /*Smartphone */
 @media(max-width: 930px){

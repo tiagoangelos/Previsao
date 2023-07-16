@@ -1,7 +1,9 @@
 import './Home.css';
 import { ImSearch } from 'react-icons/im';
 import { BiSolidError } from 'react-icons/bi';
-import { useState } from 'react';
+import { MdLocationPin } from 'react-icons/md';
+import { BsGithub } from 'react-icons/bs';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 //icons import's
@@ -31,7 +33,8 @@ function Home(){
     const city = document.querySelector('.city');
     const date = document.querySelector('.date');
     const container_img = document.querySelector('.container-img');
-    const container_temp = document.querySelector('.container-temp');
+    const container_temp = document.querySelector('.container-temp div');
+    const temp_unit = document.querySelector('.container-temp span');
     const weather_t = document.querySelector('.weather');
     const low_high = document.querySelector(".low-high");
     const humidity = document.querySelector('.humidity');
@@ -41,10 +44,7 @@ function Home(){
     const progressBar = document.querySelector('.progress .progress-bar');
     const search_button = document.querySelector('.btn');
     const search_input = document.querySelector('.form-control');
-    
-    const temp_number = document.querySelector('.container-temp div');
-    const temp_unit = document.querySelector('.container-temp span');
-
+    const btnLocal = document.querySelector('.btn-local');
 
     //Get value input
     const [search, setSearch] = useState('');
@@ -55,37 +55,33 @@ function Home(){
     const Units = process.env.REACT_APP_UNITS;
     const Key = process.env.REACT_APP_KEY;
     
-    //buider date
-    const dateBuider = (CurrentDate) => {
-        let days = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado']; //0 at 6
-        let months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']; //0 at 11
-
-        let day = days[CurrentDate.getDay()];
-        let date = CurrentDate.getDate();
-        let month = months[CurrentDate.getMonth()];
-        let year = CurrentDate.getFullYear();
-
-        return `${day}, ${date} ${month} ${year}`;
-    }
-
     //Loading
-    function loading(){
+    const loading = () => {
         progress.style.display = 'flex';
         progressBar.style.width = '25%';
+        progressBar.innerText = '25%';
 
         //disable button and input of search
         search_button.disabled = true;
         search_input.disabled = true;
+        btnLocal.disabled = true;
     }
 
     //Loading Finish
-    function loadingFinish(){
+    const loadingFinish = () => {
         progress.style.display = 'none';
         progressBar.style.width = '0%';
 
         //enable buttons search
         search_button.disabled = false;
         search_input.disabled = false;
+        btnLocal.disabled = false;
+    }
+
+
+    //tranform string to UpperCase
+    const capitalizeFirstLetter = (string) => {
+        return string.charAt(0).toUpperCase() + string.slice(1);
     }
 
     //Process Icon
@@ -134,9 +130,33 @@ function Home(){
         }
     }
 
-    //tranform string to UpperCase
-    const capitalizeFirstLetter = (string) => {
-        return string.charAt(0).toUpperCase() + string.slice(1);
+    //buider date
+    const dateBuider = (CurrentDate) => {
+        let days = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sabado']; //0 at 6
+        let months = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro']; //0 at 11
+
+        let day = days[CurrentDate.getDay()];
+        let date = CurrentDate.getDate();
+        let month = months[CurrentDate.getMonth()];
+        let year = CurrentDate.getFullYear();
+
+        return `${day}, ${date} ${month} ${year}`;
+    }
+
+    //convert temperature
+    const convertTemp = () => {
+        const temperature = container_temp.innerHTML;
+        const unit = temp_unit.innerHTML;
+
+        if(unit === '°C'){
+            let Fahrenheit = (temperature * 1.8) + 32;
+            container_temp.innerHTML = Math.round(Fahrenheit);
+            temp_unit.innerHTML = `°F`;
+        }else{
+            let graus = (temperature - 32) / 1.8;
+            container_temp.innerHTML = Math.round(graus);
+            temp_unit.innerHTML = `°C`;
+        }
     }
 
     //insert results in the page
@@ -154,8 +174,9 @@ function Home(){
         let icon = processIcon(iconName);
         container_img.innerHTML = `<img src="${icon}" width="110px" heigh="80px"></img>`;
 
-        let temperature = `${Math.round(weather.main.temp)}°C`;
+        let temperature = `${Math.round(weather.main.temp)}`;
         container_temp.innerHTML = temperature;
+        temp_unit.innerHTML = `°C`;
 
         let description = weather.weather[0].description;
         weather_t.innerText = capitalizeFirstLetter(description);
@@ -171,7 +192,7 @@ function Home(){
     }
 
     //Msg span -> Error City Not Found
-    function cityNotFound(){
+    const cityNotFound = () => {
         spanMessage.style.display = 'flex';
         span.innerText = ` Cidade Não Localizada!`;
         
@@ -182,7 +203,8 @@ function Home(){
     }
 
     //Ocult Msg Span -> Sucess
-    function cityFound(){
+    const cityFound = () => {
+        const spanMessage = document.querySelector('.span-message');
         spanMessage.style.display = 'none';
     }
 
@@ -207,9 +229,7 @@ function Home(){
     const treatValue = (search) => {
         //Loading-progress
         loading();
-        progressBar.style.width = '25%';
-        progressBar.innerText = '25%';
-
+        
         const srt = search.toLowerCase();
         const value = srt.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
         
@@ -218,7 +238,7 @@ function Home(){
     }
 
     //Msg Span -> Error Input Null
-    function inputNull(){
+    const inputNull = () => {
         const spanMessage = document.querySelector('.span-message');
         const span = document.querySelector('.span');
 
@@ -244,11 +264,54 @@ function Home(){
         }
     }
 
+    const RedirectToRepositore = () => {
+        const Link = 'https://github.com/jtas20/Previsao-Do-Tempo';
+        window.open(Link, '_blank');
+    }
+
+    //request localization city by coords
+    const requestLocal = async (lat, long) => {
+        await axios.get(`${Base}weather?lat=${lat}&lon=${long}&lang=${Lang}&units=${Units}&APPID=${Key}`)
+        .then(function(response){
+            const cityByCoords = response.data.name;
+            treatValue(cityByCoords);
+        })
+        .catch(function(error){
+            cityNotFound();
+        })
+    }
+
+    //get Localization -> by coords
+    const getLocalization = () => {
+        if(navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(getCoords, showError)
+        }else{
+            
+        }
+
+        function getCoords(position){
+            const lat = position.coords.latitude;
+            const long = position.coords.longitude;
+
+            requestLocal(lat, long);
+        }
+
+        function showError(){
+            const spanMessage = document.querySelector('.span-message');
+            const span = document.querySelector('.span');
+
+            spanMessage.style.display = 'flex';
+            span.innerText = ` Navegador Não Suporta GeoLocalização!`;
+        }
+    }
+
+
     return (
         <div class='container-card'>
             <div class="card mb-3 card-bootstrap text-center bg-transparent shadow-lg">
                 <div class="card-header bg-gray title-header">
                     PREVISÃO DO TEMPO
+                    <BsGithub class='icon-header' onClick={RedirectToRepositore}/>
                 </div>
 
                 <div class="card-body">
@@ -259,7 +322,7 @@ function Home(){
                         <img src={_unknown} width="110px" heigh="80px"></img>
                     </div>
 
-                    <div class='container-temp'>
+                    <div class='container-temp' onClick={convertTemp}>
                         <div></div>
                         <span>°C</span>
                     </div>
@@ -304,6 +367,9 @@ function Home(){
                         <div class="input-group-append">
                             <button class="btn btn-outline-secondary" type="button" id="button-addon2" disabled={false} onClick={getValue}>
                                 <ImSearch class='icon-search' />
+                            </button>
+                            <button class="btn btn-local btn-outline-secondary" type="button" id="button-addon2" disabled={false} onClick={getLocalization}>
+                                <MdLocationPin class='icon-search-2' />
                             </button>
                         </div>
                     </div>
