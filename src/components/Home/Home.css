@@ -122,6 +122,16 @@ body {
     font-size: large;
 }
 
+.icon-search-3 {
+    color: var(--color-secundary);
+    font-weight: bolder;
+    font-size: large;
+}
+
+.btn-error {
+    display: none;
+}
+
 /*Smartphone */
 @media(max-width: 930px){
     .container-card {

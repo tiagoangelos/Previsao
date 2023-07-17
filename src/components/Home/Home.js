@@ -2,6 +2,7 @@ import './Home.css';
 import { ImSearch } from 'react-icons/im';
 import { BiSolidError } from 'react-icons/bi';
 import { MdLocationPin } from 'react-icons/md';
+import { MdOutlineLocationOff } from 'react-icons/md';
 import { BsGithub } from 'react-icons/bs';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -45,6 +46,7 @@ function Home(){
     const search_button = document.querySelector('.btn');
     const search_input = document.querySelector('.form-control');
     const btnLocal = document.querySelector('.btn-local');
+    const btnError = document.querySelector('.btn-error');
 
     //Get value input
     const [search, setSearch] = useState('');
@@ -65,6 +67,7 @@ function Home(){
         search_button.disabled = true;
         search_input.disabled = true;
         btnLocal.disabled = true;
+        btnError.disabled = true;
     }
 
     //Loading Finish
@@ -76,8 +79,8 @@ function Home(){
         search_button.disabled = false;
         search_input.disabled = false;
         btnLocal.disabled = false;
+        btnError.disabled = false;
     }
-
 
     //tranform string to UpperCase
     const capitalizeFirstLetter = (string) => {
@@ -269,12 +272,14 @@ function Home(){
         window.open(Link, '_blank');
     }
 
-    //request localization city by coords
+    //get name city by coords -> request
     const requestLocal = async (lat, long) => {
         await axios.get(`${Base}weather?lat=${lat}&lon=${long}&lang=${Lang}&units=${Units}&APPID=${Key}`)
         .then(function(response){
             const cityByCoords = response.data.name;
-            treatValue(cityByCoords);
+            
+            setSearch(cityByCoords);
+            const search_button = document.querySelector('.btn').click();
         })
         .catch(function(error){
             cityNotFound();
@@ -290,6 +295,14 @@ function Home(){
         }
 
         function getCoords(position){
+            //front-end
+            const btnLocal = document.querySelector('.btn-local');
+            btnLocal.style.display = 'flex';
+
+            const btnError = document.querySelector('.btn-error');
+            btnError.style.display = 'none';
+
+            //data-request
             const lat = position.coords.latitude;
             const long = position.coords.longitude;
 
@@ -297,15 +310,18 @@ function Home(){
         }
 
         function showError(){
-            const spanMessage = document.querySelector('.span-message');
-            const span = document.querySelector('.span');
+            const btnLocal = document.querySelector('.btn-local');
+            btnLocal.style.display = 'none';
 
-            spanMessage.style.display = 'flex';
-            span.innerText = ` Navegador Não Suporta GeoLocalização!`;
+            const btnError = document.querySelector('.btn-error');
+            btnError.style.display = 'flex';
         }
     }
 
-
+    useEffect(() => {
+        getLocalization();
+    }, [])
+   
     return (
         <div class='container-card'>
             <div class="card mb-3 card-bootstrap text-center bg-transparent shadow-lg">
@@ -368,8 +384,13 @@ function Home(){
                             <button class="btn btn-outline-secondary" type="button" id="button-addon2" disabled={false} onClick={getValue}>
                                 <ImSearch class='icon-search' />
                             </button>
+
                             <button class="btn btn-local btn-outline-secondary" type="button" id="button-addon2" disabled={false} onClick={getLocalization}>
                                 <MdLocationPin class='icon-search-2' />
+                            </button>
+
+                            <button class="btn btn-error btn-outline-secondary" type="button" id="button-addon2" disabled={false} onClick={getLocalization}>
+                                <MdOutlineLocationOff class='icon-search-3' />
                             </button>
                         </div>
                     </div>
