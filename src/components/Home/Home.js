@@ -272,14 +272,20 @@ function Home(){
         window.open(Link, '_blank');
     }
 
+    //progress to request with name city
+    const progressToRequest = () => {
+        const search_button = document.querySelector('.btn');
+        search_button.click();
+    }
+
     //get name city by coords -> request
     const requestLocal = async (lat, long) => {
         await axios.get(`${Base}weather?lat=${lat}&lon=${long}&lang=${Lang}&units=${Units}&APPID=${Key}`)
         .then(function(response){
             const cityByCoords = response.data.name;
-            
-            setSearch(cityByCoords);
-            const search_button = document.querySelector('.btn').click();
+    
+            setSearch(`${cityByCoords}`);
+            progressToRequest();
         })
         .catch(function(error){
             cityNotFound();
@@ -320,7 +326,7 @@ function Home(){
 
     useEffect(() => {
         getLocalization();
-    }, [])
+    }, []);
    
     return (
         <div class='container-card'>
