@@ -324,10 +324,7 @@ function Home(){
         }
     }
 
-    useEffect(() => {
-        getLocalization();
-    }, []);
-   
+    
     return (
         <div class='container-card'>
             <div class="card mb-3 card-bootstrap text-center bg-transparent shadow-lg">
