@@ -4,7 +4,7 @@ import { BiSolidError } from 'react-icons/bi';
 import { MdLocationPin } from 'react-icons/md';
 import { MdOutlineLocationOff } from 'react-icons/md';
 import { BsGithub } from 'react-icons/bs';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 
 //icons import's
@@ -285,6 +285,7 @@ function Home(){
             const cityByCoords = response.data.name;
     
             setSearch(`${cityByCoords}`);
+            const search_button = document.querySelector('.btn').click();
             progressToRequest();
         })
         .catch(function(error){
