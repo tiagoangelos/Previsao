@@ -272,21 +272,13 @@ function Home(){
         window.open(Link, '_blank');
     }
 
-    //progress to request with name city
-    const progressToRequest = () => {
-        const search_button = document.querySelector('.btn');
-        search_button.click();
-    }
-
     //get name city by coords -> request
     const requestLocal = async (lat, long) => {
         await axios.get(`${Base}weather?lat=${lat}&lon=${long}&lang=${Lang}&units=${Units}&APPID=${Key}`)
         .then(function(response){
             const cityByCoords = response.data.name;
-    
-            setSearch(`${cityByCoords}`);
-            const search_button = document.querySelector('.btn').click();
-            progressToRequest();
+
+            console.log(cityByCoords);
         })
         .catch(function(error){
             cityNotFound();
@@ -328,7 +320,7 @@ function Home(){
     
     return (
         <div class='container-card'>
-            <div class="card mb-3 card-bootstrap text-center bg-transparent shadow-lg">
+            <div class="card mb-3 card-bootstrap text-center bg-transparent">
                 <div class="card-header bg-gray title-header">
                     PREVISÃO DO TEMPO
                     <BsGithub class='icon-header' onClick={RedirectToRepositore}/>

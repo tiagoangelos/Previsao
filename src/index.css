@@ -7,8 +7,10 @@ body {
 
 /*color's */
 :root {
-  --color-icon-seach: #3452d3;
-  --color-primary: #fffefe;
+  --color-background: #35487e;
+  --color-all: #eeeeee;
+  --color-icon-search: #ffffff;
+  --color-primary: #ff1010;
   --color-background-span: #d0d0d0;
   --color-secundary: #e13a3a;
 }
