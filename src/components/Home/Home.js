@@ -27,6 +27,7 @@ import _13d from '../../assets/icons/13d.png';
 import _13n from '../../assets/icons/13n.png';
 import _50d from '../../assets/icons/50d.png';
 import _50n from '../../assets/icons/50n.png';
+import { useEffect } from 'react';
 
 
 function Home(){
@@ -317,7 +318,7 @@ function Home(){
         }
     }
 
-    
+
     return (
         <div class='container-card'>
             <div class="card mb-3 card-bootstrap text-center bg-transparent">
