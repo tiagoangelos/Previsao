@@ -19,6 +19,15 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    animation: fliptitle 2s;
+}
+
+@keyframes fliptitle {
+    from{
+        transform: rotateX(100deg);
+    }to{
+        transform: rotateX(0deg);
+    }
 }
 
 .icon-header {
@@ -85,8 +94,8 @@ body {
 }
 
 .span-message {
-    background-color: var(--color-background-span);
     display: none;
+    background-color: var(--color-background-span);
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -97,14 +106,30 @@ body {
 }
 
 .span-message .icon-span {
-    width: 25px;
-    height: 25px;
+    align-items: center;
+    justify-content: center;
+    margin: 2px;
     color: var(--color-secundary);
 }
 
 .span-message .span {   
     color: var(--color-secundary);
 }
+
+.span-local {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+}
+
+.span-local .icon-local {
+    align-items: center;
+    justify-content: center;
+    margin: 2px;
+    color: var(--color-all);
+}
+
 
 /*Loading Progress */
 .progress {

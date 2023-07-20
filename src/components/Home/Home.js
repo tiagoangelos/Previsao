@@ -4,7 +4,7 @@ import { BiSolidError } from 'react-icons/bi';
 import { MdLocationPin } from 'react-icons/md';
 import { MdOutlineLocationOff } from 'react-icons/md';
 import { BsGithub } from 'react-icons/bs';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 //icons import's
@@ -27,7 +27,6 @@ import _13d from '../../assets/icons/13d.png';
 import _13n from '../../assets/icons/13n.png';
 import _50d from '../../assets/icons/50d.png';
 import _50n from '../../assets/icons/50n.png';
-import { useEffect } from 'react';
 
 
 function Home(){
@@ -268,20 +267,33 @@ function Home(){
         }
     }
 
+    //redirect to gitHub - CodeSource
     const RedirectToRepositore = () => {
-        const Link = 'https://github.com/jtas20/Previsao-Do-Tempo';
+        const Link = 'https://github.com/jtas20/Previsao';
         window.open(Link, '_blank');
     }
 
     //get name city by coords -> request
-    const requestLocal = async (lat, long) => {
+    const requestLocal = async (lat, long) => {    
         await axios.get(`${Base}weather?lat=${lat}&lon=${long}&lang=${Lang}&units=${Units}&APPID=${Key}`)
         .then(function(response){
+            //get value api
             const cityByCoords = response.data.name;
+            const country = response.data.sys.country;
 
-            console.log(cityByCoords);
+            //const's
+            const spanLocal = document.querySelector('.span-local');
+            const spanMessageLocal = document.querySelector('.span-local .span');
+
+            //front-end
+            spanLocal.style.display = 'flex';
+            spanMessageLocal.innerText = `${cityByCoords}, ${country}`;
         })
         .catch(function(error){
+            //front-end
+            const spanLocal = document.querySelector('.span-local');
+            spanLocal.style.display = 'none';
+
             cityNotFound();
         })
     }
@@ -318,6 +330,10 @@ function Home(){
         }
     }
 
+    //onload call localization
+    useEffect(() => {
+        getLocalization();
+    }, []);
 
     return (
         <div class='container-card'>
@@ -361,7 +377,12 @@ function Home(){
                     <BiSolidError class='icon-span' /> 
                     <span class='span'></span>
                 </div>
-                
+
+                <div class='span-local'>
+                    <MdLocationPin class='icon-local' /> 
+                    <span class='span'>LOCAL</span>
+                </div>
+
                 <div class="card-footer bg-gray">
                     <div class="input-group mb-3">
                         <input
