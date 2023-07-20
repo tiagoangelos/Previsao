@@ -246,7 +246,7 @@ function Home(){
         const span = document.querySelector('.span');
 
         spanMessage.style.display = 'flex';
-        span.innerText = ` Informe o Nome da Cidade!`;
+        span.innerText = ` Nome Da Cidade...`;
     }
 
     //getvalue -> click mouse
@@ -284,10 +284,23 @@ function Home(){
             //const's
             const spanLocal = document.querySelector('.span-local');
             const spanMessageLocal = document.querySelector('.span-local .span');
-
+            const search_button = document.querySelector('.btn');
+            const city = document.querySelector('.city');
+            
             //front-end
             spanLocal.style.display = 'flex';
             spanMessageLocal.innerText = `${cityByCoords}, ${country}`;
+            
+            //request -> call
+            setSearch(spanMessageLocal.innerHTML);
+            search_button.click();
+
+            //verify
+            if(city.innerHTML != spanMessageLocal.innerHTML){
+                getLocalization();
+            }else{
+
+            }
         })
         .catch(function(error){
             //front-end
