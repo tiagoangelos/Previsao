@@ -267,12 +267,6 @@ function Home(){
         }
     }
 
-    //redirect to gitHub - CodeSource
-    const RedirectToRepositore = () => {
-        const Link = 'https://github.com/jtas20/Previsao';
-        window.open(Link, '_blank');
-    }
-
     //get name city by coords -> request
     const requestLocal = async (lat, long) => {    
         await axios.get(`${Base}weather?lat=${lat}&lon=${long}&lang=${Lang}&units=${Units}&APPID=${Key}`)
@@ -347,6 +341,13 @@ function Home(){
     useEffect(() => {
         getLocalization();
     }, []);
+
+    //redirect to gitHub - CodeSource
+    const RedirectToRepositore = () => {
+        const Link = 'https://github.com/jtas20/Previsao';
+        window.open(Link, '_blank');
+    }
+
 
     return (
         <div class='container-card'>
