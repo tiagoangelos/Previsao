@@ -3,8 +3,8 @@ body {
 }
 
 .card-bootstrap {
-    box-shadow: 4px 4px 4px 5px rgba(0, 0, 0, 0.4);
-    width: 25rem;
+    box-shadow: 5px 5px 5px 6px rgba(0, 0, 0, 0.4);
+    width: 27rem;
 }
 
 .card-header {
@@ -51,26 +51,26 @@ body {
 .city {
     font-size: xx-large;
     font-weight: bolder;
-    padding-bottom: 12px;
+    padding-bottom: 10px;
 }
 
 .date {
     font-size: larger;
     font-size: bold;
-    padding-bottom: 12px;
+    padding-bottom: 10px;
 }
 
 .container-temp {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 12px;
+    margin-top: 10px;
     background-color: rgba(0, 0, 0, 0.2);
     box-shadow: 4px 7px rgba(0, 0, 0, 0.4);
     font-size: 70px;
     font-weight: bolder;
     text-shadow:  3px 4px rgba(0, 0, 0, 0.4);
-    margin-bottom: 12px;
+    margin-bottom: 10px;
 }
 
 .container-temp:hover {
@@ -81,7 +81,7 @@ body {
     padding-top: 12px;
     font-size: x-large;
     font-weight: bold;
-    padding-bottom: 12px;
+    padding-bottom: 10px;
 }
 
 .low-high {
@@ -103,7 +103,7 @@ body {
     font-size: large;
     font-weight: bold;
     padding-top: 5px;
-    padding-bottom: 10px;
+    padding-bottom: 7px;
 }
 
 .span-message .icon-span {
@@ -155,7 +155,7 @@ body {
 }
 
 .icon-search-3 {
-    color: var(--color-secundary);
+    color: var(--color-primary);
     font-weight: bolder;
     font-size: large;
 }
